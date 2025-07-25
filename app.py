@@ -29,6 +29,14 @@ with app.app_context():
     init_db()
 
 
+@app.get('/api/add')
+def add_user():
+    users = session.query(User).all()
+    new_user = User(name=f"New User {len(users)}", age=30)
+    session.add(new_user)
+    session.commit()
+    return f"User {new_user.name} added!"
+
 @app.route('/')
 def home():
     users = session.query(User).all()
